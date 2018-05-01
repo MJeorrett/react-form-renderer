@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
-import { Form, Header, Step } from 'semantic-ui-react';
+import { Form, Header } from 'semantic-ui-react';
+
+import { StepGroup } from './step-group';
 
 export class ProcessRenderer extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = { activeStepIndex: 0 }
-    }
-
-    handleStepClick = (index) => {
-        this.setState({
-            activeStepIndex: index
-        });
-    }
 
     renderStep(step, index) {
         return (
@@ -40,29 +30,10 @@ export class ProcessRenderer extends Component {
         );
     }
 
-    renderStepGroup(steps) {
-        return (
-            <Step.Group>
-                {steps.map(this.renderStepGroupOption)}                
-            </Step.Group>
-        );
-    }
-
-    renderStepGroupOption = (step, index) => {
-        return (
-            <Step
-                key={index}
-                active={index === this.state.activeStepIndex}
-                onClick={(e) => this.handleStepClick(index)}>
-                <Step.Title>{step.title}</Step.Title>
-            </Step>
-        )
-    }
-
     render() {
         return (
             <div>
-                {this.renderStepGroup(this.props.steps)}
+                <StepGroup titles={this.props.steps.map(s => s.title)} />
                 {this.props.steps.map((step, index) => this.renderStep(step, index))}
                 {JSON.stringify(this.state, null, 2)}
             </div>
