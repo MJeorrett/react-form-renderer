@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Form, Header } from 'semantic-ui-react';
+import { PropTypes } from 'prop-types';
 
 import { StepGroup } from './step-group';
 
 export class ProcessRenderer extends Component {
 
-    renderStep(step, index) {
+    renderStep = (step, index) => {
         return (
             <div key={index}>
                 <Header as='h1'>{step.title}</Header>
@@ -34,9 +35,18 @@ export class ProcessRenderer extends Component {
         return (
             <div>
                 <StepGroup titles={this.props.steps.map(s => s.title)} />
-                {this.props.steps.map((step, index) => this.renderStep(step, index))}
+                {this.props.steps.map(this.renderStep)}
                 {JSON.stringify(this.state, null, 2)}
             </div>
         );
     }
 }
+
+ProcessRenderer.propTypes = {
+    steps: PropTypes.arrayOf(PropTypes.shape({
+        title: PropTypes.string,
+        fields: PropTypes.arrayOf(PropTypes.shape({
+            title: PropTypes.string
+        }))
+    }))
+};

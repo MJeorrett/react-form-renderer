@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Step } from 'semantic-ui-react';
 
+import { PropTypes } from 'prop-types'
+
 export class StepGroup extends Component {
 
     constructor(props) {
@@ -34,3 +36,7 @@ export class StepGroup extends Component {
         );
     }
 }
+
+StepGroup.propTypes = {
+    titles: PropTypes.arrayOf(PropTypes.string).isRequired
+};
