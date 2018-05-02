@@ -10,24 +10,20 @@ export class ProcessRenderer extends Component {
         return (
             <div key={index}>
                 <Header as='h1'>{step.title}</Header>
-                {this.renderStepFields(step.fields)}
+                {step.fields.map(this.renderStepField)}
             </div>
         );
     }
 
-    renderStepFields(fields) {
+    renderStepField(field, index) {
         return (
-            fields.map((field, index) => {
-                return (
-                    <div key={index}>
-                        <Form>
-                            <Form.Group widths='equal'>
-                                <Form.Input fluid label={field.title} placeholder={field.title}></Form.Input>
-                            </Form.Group>
-                        </Form>
-                    </div>
-                )
-            })
+            <div key={index}>
+                <Form>
+                    <Form.Group widths='equal'>
+                        <Form.Input fluid label={field.title} placeholder={field.title}></Form.Input>
+                    </Form.Group>
+                </Form>
+            </div>
         );
     }
 
