@@ -15,6 +15,7 @@ export class StepGroup extends Component {
         this.setState({
             activeStepIndex: index
         });
+        this.props.titleSelected(index);
     }
 
     renderStepGroupOption = (title, index) => {
@@ -38,5 +39,6 @@ export class StepGroup extends Component {
 }
 
 StepGroup.propTypes = {
-    titles: PropTypes.arrayOf(PropTypes.string).isRequired
+    titles: PropTypes.arrayOf(PropTypes.string).isRequired,
+    titleSelected: PropTypes.func.isRequired
 };
