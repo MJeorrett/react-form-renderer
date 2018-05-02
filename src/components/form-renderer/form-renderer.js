@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Form, Header } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
 
-import './process-renderer.css';
+import './form-renderer.css';
 import { StepGroup } from './step-group';
 
-export class ProcessRenderer extends Component {
+export class FormRenderer extends Component {
 
     constructor(props) {
         super(props);
@@ -22,7 +22,6 @@ export class ProcessRenderer extends Component {
     renderStep = (step, index) => {
         return (
             <div key={index} className={index === this.state.selectedStepIndex ? "" : "displayNone"}>
-                <Header as='h1'>{step.title}</Header>
                 <Form>
                     {step.fields.map(this.renderStepField)}
                 </Form>
@@ -52,7 +51,7 @@ export class ProcessRenderer extends Component {
     }
 }
 
-ProcessRenderer.propTypes = {
+FormRenderer.propTypes = {
     steps: PropTypes.arrayOf(PropTypes.shape({
         title: PropTypes.string,
         fields: PropTypes.arrayOf(PropTypes.shape({
