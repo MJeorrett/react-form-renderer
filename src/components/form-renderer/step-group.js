@@ -5,24 +5,15 @@ import { PropTypes } from 'prop-types'
 
 export class StepGroup extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = { activeStepIndex: 0 }
-    }
-
     handleStepClick = (index) => {
-        this.setState({
-            activeStepIndex: index
-        });
-        this.props.titleSelected(index);
+        this.props.onTitleSelected(index);
     }
 
     renderStepGroupOption = (title, index) => {
         return (
             <Step
                 key={index}
-                active={index === this.state.activeStepIndex}
+                active={index === this.props.selectedIndex}
                 onClick={(e) => this.handleStepClick(index)}>
                 <Step.Title>{title}</Step.Title>
             </Step>
@@ -40,5 +31,6 @@ export class StepGroup extends Component {
 
 StepGroup.propTypes = {
     titles: PropTypes.arrayOf(PropTypes.string).isRequired,
-    titleSelected: PropTypes.func.isRequired
+    selectedIndex: PropTypes.number,
+    onTitleSelected: PropTypes.func.isRequired
 };

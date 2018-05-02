@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Header } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
 
 import './form-renderer.css';
@@ -13,18 +13,29 @@ export class FormRenderer extends Component {
         this.state = { selectedStepIndex: 0 };
     }
 
-    stepSelected = (index) => {
+    selectStep = (index) => {
         this.setState({
             selectedStepIndex: index
         });
     }
 
+    nextStep = () => this.selectStep(this.state.selectedStepIndex + 1)
+    previousStep = () => this.selectStep(this.state.selectedStepIndex - 1)
+
     renderStep = (step, index) => {
+
+        const selected = index === this.state.selectedStepIndex;
+        const first = index === 0;
+        const last = index === this.props.steps.length - 1;
+
         return (
-            <div key={index} className={index === this.state.selectedStepIndex ? "" : "displayNone"}>
+            <div key={index} className={selected ? "" : "displayNone"}>
                 <Form>
                     {step.fields.map(this.renderStepField)}
                 </Form>
+                { first ? null : <Button onClick={this.previousStep}>Previous</Button> }
+                { last ? null : <Button onClick={this.nextStep}>Next</Button> }
+                { last ? <Button positive>Submit</Button> : null }
             </div>
         );
     }
@@ -44,7 +55,10 @@ export class FormRenderer extends Component {
     render() {
         return (
             <div>
-                <StepGroup titles={this.props.steps.map(s => s.title)} titleSelected={this.stepSelected} />
+                <StepGroup
+                    titles={this.props.steps.map(s => s.title)}
+                    selectedIndex={this.state.selectedStepIndex}
+                    onTitleSelected={this.selectStep} />
                 {this.props.steps.map(this.renderStep)}
             </div>
         );
