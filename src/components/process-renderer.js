@@ -23,20 +23,22 @@ export class ProcessRenderer extends Component {
         return (
             <div key={index} className={index === this.state.selectedStepIndex ? "" : "displayNone"}>
                 <Header as='h1'>{step.title}</Header>
-                {step.fields.map(this.renderStepField)}
+                <Form>
+                    {step.fields.map(this.renderStepField)}
+                </Form>
             </div>
         );
     }
 
     renderStepField(field, index) {
         return (
-            <div key={index}>
-                <Form>
-                    <Form.Group widths='equal'>
-                        <Form.Input fluid label={field.title} placeholder={field.title}></Form.Input>
-                    </Form.Group>
-                </Form>
-            </div>
+            <Form.Group key={index} widths='equal'>
+                <Form.Input
+                    fluid
+                    label={field.title}
+                    placeholder={field.title}>
+                </Form.Input>
+            </Form.Group>
         );
     }
 
