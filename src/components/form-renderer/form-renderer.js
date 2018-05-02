@@ -19,23 +19,32 @@ export class FormRenderer extends Component {
         });
     }
 
-    nextStep = () => this.selectStep(this.state.selectedStepIndex + 1)
-    previousStep = () => this.selectStep(this.state.selectedStepIndex - 1)
+    onNextStep = () => this.selectStep(this.state.selectedStepIndex + 1)
+    onPreviousStep = () => this.selectStep(this.state.selectedStepIndex - 1)
+    onSubmit = () => console.log("Form submitted!")
 
-    renderStep = (step, index) => {
-
-        const selected = index === this.state.selectedStepIndex;
+    renderButtons = (index) => {
         const first = index === 0;
         const last = index === this.props.steps.length - 1;
+
+        return (
+            <div>
+                { !first && <Button onClick={this.onPreviousStep}>Previous</Button> }
+                { !last && <Button onClick={this.onNextStep}>Next</Button> }
+                { last && <Button positive onClick={this.onSubmit}>Submit</Button> }
+            </div>
+        )
+    }
+
+    renderStep = (step, index) => {
+        const selected = index === this.state.selectedStepIndex;
 
         return (
             <div key={index} className={selected ? "" : "displayNone"}>
                 <Form>
                     {step.fields.map(this.renderStepField)}
                 </Form>
-                { first ? null : <Button onClick={this.previousStep}>Previous</Button> }
-                { last ? null : <Button onClick={this.nextStep}>Next</Button> }
-                { last ? <Button positive>Submit</Button> : null }
+                {this.renderButtons(index)}
             </div>
         );
     }
