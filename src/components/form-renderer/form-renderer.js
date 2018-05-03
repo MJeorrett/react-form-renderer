@@ -1,27 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Button, Form } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
 
 import './form-renderer.css';
 import { StepGroup } from './step-group';
+import {
+    previousStep,
+    nextStep,
+    selectStep,
+    submit
+} from '../../store/form-render/form-renderer.actions';
 
-export class FormRenderer extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = { selectedStepIndex: 0 };
-    }
-
-    selectStep = (index) => {
-        this.setState({
-            selectedStepIndex: index
-        });
-    }
-
-    onNextStep = () => this.selectStep(this.state.selectedStepIndex + 1)
-    onPreviousStep = () => this.selectStep(this.state.selectedStepIndex - 1)
-    onSubmit = () => console.log("Form submitted!")
+class FormRenderer extends Component {
 
     renderButtons = (index) => {
         const first = index === 0;
@@ -29,15 +20,15 @@ export class FormRenderer extends Component {
 
         return (
             <div>
-                { !first && <Button onClick={this.onPreviousStep}>Previous</Button> }
-                { !last && <Button onClick={this.onNextStep}>Next</Button> }
-                { last && <Button positive onClick={this.onSubmit}>Submit</Button> }
+                { !first && <Button onClick={this.props.previousStep}>Previous</Button> }
+                { !last && <Button onClick={this.props.nextStep}>Next</Button> }
+                { last && <Button positive onClick={this.props.submit}>Submit</Button> }
             </div>
         )
     }
 
     renderStep = (step, index) => {
-        const selected = index === this.state.selectedStepIndex;
+        const selected = index === this.props.selectedStepIndex;
 
         return (
             <div key={index} className={selected ? "" : "displayNone"}>
@@ -66,8 +57,8 @@ export class FormRenderer extends Component {
             <div>
                 <StepGroup
                     titles={this.props.steps.map(s => s.title)}
-                    selectedIndex={this.state.selectedStepIndex}
-                    onTitleSelected={this.selectStep} />
+                    selectedIndex={this.props.selectedStepIndex}
+                    onTitleSelected={this.props.selectStep} />
                 {this.props.steps.map(this.renderStep)}
             </div>
         );
@@ -82,3 +73,27 @@ FormRenderer.propTypes = {
         }))
     }))
 };
+
+const mapStateToProps = (state) => {
+    return {
+        selectedStepIndex: state.formRenderer.currentStepIndex
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        nextStep: () => dispatch(nextStep()),
+        previousStep: () => dispatch(previousStep()),
+        selectStep: (index) => {
+            dispatch(selectStep(index))
+        },
+        submit: () => dispatch(submit())
+    };
+};
+
+const FormRendererContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FormRenderer);
+
+export default FormRendererContainer;
