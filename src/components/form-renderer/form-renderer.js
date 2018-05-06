@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
+import { Divider } from 'semantic-ui-react';
 
 import { Breadcrumbs } from './breadcrumbs';
 import { Step } from './step';
@@ -72,6 +73,7 @@ export class FormRenderer extends Component {
                         />
                     );
                 })}
+                <Divider hidden />
                 <Buttons 
                     isFirstPage={isFirstPage}
                     isLastPage={isLastPage}

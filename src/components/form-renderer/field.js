@@ -10,14 +10,14 @@ export class Field extends Component {
     render() {
         const { field } = this.props;
 
-        return <Form.Group widths='equal'>
+        return (
             <Form.Input
                 fluid
                 label={field.title}
                 placeholder={field.title}
                 onChange={this.handleChange}>
             </Form.Input>
-        </Form.Group>
+        )
     }
 }
 
