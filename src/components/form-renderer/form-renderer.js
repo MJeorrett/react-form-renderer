@@ -1,28 +1,48 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
 import { Breadcrumbs } from './breadcrumbs';
 import { Step } from './step';
 import { Buttons } from './buttons';
-import {
-    previousStep,
-    nextStep,
-    selectStep,
-    submit
-} from '../../store/form-render/form-renderer.actions';
 
-class FormRenderer extends Component {
+export class FormRenderer extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            activeStepIndex: 0
+        };
+    }
+
+    setActiveStepIndex = (index) => {
+        this.setState({
+            activeStepIndex: index
+        });
+    }
+
+    onNext = () => {
+        this.setActiveStepIndex(this.state.activeStepIndex + 1);
+    }
+
+    onPrevious = () => {
+        this.setActiveStepIndex(this.state.activeStepIndex - 1);
+    }
+
+    onSubmit = () => {
+        console.log("Form submitted!");
+    }
+
     render() {
-        const { steps, activeStepIndex, onPrevious, onNext, onSubmit, selectStep } = this.props
+        const { steps } = this.props
+        const { activeStepIndex } = this.state;
         const isFirstPage = activeStepIndex === 0;
         const isLastPage = activeStepIndex === steps.length - 1;
         return (
             <div>
                 <Breadcrumbs
-                    titles={this.props.steps.map(s => s.title)}
+                    titles={steps.map(s => s.title)}
                     activeStepIndex={activeStepIndex}
-                    onTitleSelected={selectStep} />
+                    onTitleSelected={this.setActiveStepIndex} />
                 {this.props.steps.map((step, index) => {
                     return (
                         <Step key={index}
@@ -34,9 +54,9 @@ class FormRenderer extends Component {
                 <Buttons 
                     isFirstPage={isFirstPage}
                     isLastPage={isLastPage}
-                    onPrevious={onPrevious}
-                    onNext={onNext}
-                    onSubmit={onSubmit}/>
+                    onPrevious={this.onPrevious}
+                    onNext={this.onNext}
+                    onSubmit={this.onSubmit}/>
             </div>
         );
     }
@@ -50,27 +70,3 @@ FormRenderer.propTypes = {
         })).isRequired
     })).isRequired
 };
-
-const mapStateToProps = (state) => {
-    return {
-        activeStepIndex: state.formRenderer.activeStepIndex
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onPrevious: () => dispatch(previousStep()),
-        onNext: () => dispatch(nextStep()),
-        onSubmit: () => dispatch(submit()),
-        selectStep: (index) => {
-            dispatch(selectStep(index))
-        }
-    };
-};
-
-const FormRendererContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(FormRenderer);
-
-export default FormRendererContainer;
