@@ -10,6 +10,8 @@ import {
     FormRenderer
 } from '../components'
 
+import { VALIDATIONS } from '../components/form-renderer'
+
 export class NewFormView extends Component {
 
     steps = [
@@ -17,7 +19,8 @@ export class NewFormView extends Component {
             title: "Title",
             fields: [
                 {
-                    title: "Title"
+                    title: "Title",
+                    validations: [ VALIDATIONS.REQUIRED ]
                 },
                 {
                     title: "Sub-title"
@@ -28,10 +31,12 @@ export class NewFormView extends Component {
             title: "Description",
             fields: [
                 {
-                    title: "Description"
+                    title: "Description",
+                    validations: [ VALIDATIONS.REQUIRED ]
                 },
                 {
-                    title: "Version"
+                    title: "Version",
+                    validations: [ VALIDATIONS.REQUIRED ]
                 }
             ]
         }

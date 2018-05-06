@@ -1,7 +1,8 @@
 import { PropTypes } from 'prop-types';
 
 export const field = PropTypes.shape({
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    validations: PropTypes.arrayOf(PropTypes.string)
 });
 
 export const step = PropTypes.shape({
