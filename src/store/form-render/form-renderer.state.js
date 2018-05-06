@@ -1,5 +1,5 @@
 export class FormRendererState {
     constructor() {
-        this.currentStepIndex = 0;
+        this.activeStepIndex = 0;
     }
 }

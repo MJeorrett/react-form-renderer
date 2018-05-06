@@ -1,57 +1,42 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
 
-import './form-renderer.css';
 import { Breadcrumbs } from './breadcrumbs';
+import { Step } from './step';
+import { Buttons } from './buttons';
 import {
     previousStep,
     nextStep,
     selectStep,
     submit
 } from '../../store/form-render/form-renderer.actions';
-import { Buttons } from './buttons';
 
 class FormRenderer extends Component {
-    renderStep = (step, index) => {
-        const selected = index === this.props.selectedStepIndex;
-
-        return (
-            <div key={index} className={selected ? "" : "displayNone"}>
-                <Form>
-                    {step.fields.map(this.renderStepField)}
-                </Form>
-                <Buttons
-                    numberOfSteps={this.props.steps.length}
-                    currentIndex={this.props.selectedStepIndex}
-                    onPrevious={this.props.previousStep}
-                    onNext={this.props.nextStep}
-                    onSubmit={this.props.submit} />
-            </div>
-        );
-    }
-
-    renderStepField(field, index) {
-        return (
-            <Form.Group key={index} widths='equal'>
-                <Form.Input
-                    fluid
-                    label={field.title}
-                    placeholder={field.title}>
-                </Form.Input>
-            </Form.Group>
-        );
-    }
-
     render() {
+        const { steps, activeStepIndex, onPrevious, onNext, onSubmit, selectStep } = this.props
+        const isFirstPage = activeStepIndex === 0;
+        const isLastPage = activeStepIndex === steps.length - 1;
         return (
             <div>
                 <Breadcrumbs
                     titles={this.props.steps.map(s => s.title)}
-                    selectedIndex={this.props.selectedStepIndex}
-                    onTitleSelected={this.props.selectStep} />
-                {this.props.steps.map(this.renderStep)}
+                    activeStepIndex={activeStepIndex}
+                    onTitleSelected={selectStep} />
+                {this.props.steps.map((step, index) => {
+                    return (
+                        <Step key={index}
+                            step={step}
+                            isActive={activeStepIndex === index}
+                        />
+                    );
+                })}
+                <Buttons 
+                    isFirstPage={isFirstPage}
+                    isLastPage={isLastPage}
+                    onPrevious={onPrevious}
+                    onNext={onNext}
+                    onSubmit={onSubmit}/>
             </div>
         );
     }
@@ -62,24 +47,24 @@ FormRenderer.propTypes = {
         title: PropTypes.string.isRequired,
         fields: PropTypes.arrayOf(PropTypes.shape({
             title: PropTypes.string.isRequired
-        }).isRequired)
+        })).isRequired
     })).isRequired
 };
 
 const mapStateToProps = (state) => {
     return {
-        selectedStepIndex: state.formRenderer.currentStepIndex
+        activeStepIndex: state.formRenderer.activeStepIndex
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        nextStep: () => dispatch(nextStep()),
-        previousStep: () => dispatch(previousStep()),
+        onPrevious: () => dispatch(previousStep()),
+        onNext: () => dispatch(nextStep()),
+        onSubmit: () => dispatch(submit()),
         selectStep: (index) => {
             dispatch(selectStep(index))
-        },
-        submit: () => dispatch(submit())
+        }
     };
 };
 

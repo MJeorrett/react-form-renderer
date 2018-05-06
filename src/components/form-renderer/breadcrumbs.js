@@ -5,16 +5,13 @@ import { PropTypes } from 'prop-types'
 
 export class Breadcrumbs extends Component {
 
-    handleStepClick = (index) => {
-        this.props.onTitleSelected(index);
-    }
-
-    renderStepGroupOption = (title, index) => {
+    renderOption = (title, index) => {
+        const { activeStepIndex, onTitleSelected } = this.props;
         return (
             <Step
                 key={index}
-                active={index === this.props.selectedIndex}
-                onClick={(e) => this.handleStepClick(index)}>
+                active={index === activeStepIndex}
+                onClick={(e) => onTitleSelected(index)}>
                 <Step.Title>{title}</Step.Title>
             </Step>
         )
@@ -23,7 +20,7 @@ export class Breadcrumbs extends Component {
     render() {
         return (
             <Step.Group>
-                {this.props.titles.map(this.renderStepGroupOption)}                
+                {this.props.titles.map(this.renderOption)}                
             </Step.Group>
         );
     }
@@ -31,6 +28,6 @@ export class Breadcrumbs extends Component {
 
 Breadcrumbs.propTypes = {
     titles: PropTypes.arrayOf(PropTypes.string).isRequired,
-    selectedIndex: PropTypes.number,
+    activeStepIndex: PropTypes.number,
     onTitleSelected: PropTypes.func.isRequired
 };

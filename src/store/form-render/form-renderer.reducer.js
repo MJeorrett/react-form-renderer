@@ -5,19 +5,19 @@ import {
 
 function updatePreviousStep(state) {
     return Object.assign({}, state, {
-        currentStepIndex: state.currentStepIndex - 1
+        activeStepIndex: state.activeStepIndex - 1
     });
 }
 
 function updateNextStep(state) {
     return Object.assign({}, state, {
-        currentStepIndex: state.currentStepIndex + 1
+        activeStepIndex: state.activeStepIndex + 1
     });
 }
 
 function updateSelectStep(state, action) {
     return Object.assign({}, state, {
-        currentStepIndex: action.payload
+        activeStepIndex: action.payload
     });
 }
 

@@ -5,24 +5,21 @@ import { Button } from 'semantic-ui-react';
 export class Buttons extends Component {
     render = () => {
 
-        const { currentIndex, onPrevious, onNext, onSubmit, numberOfSteps } = this.props;
-
-        const first = currentIndex === 0;
-        const last = currentIndex === numberOfSteps - 1;
+        const { isFirstPage, isLastPage, onPrevious, onNext, onSubmit } = this.props;
 
         return (
             <div>
-                { !first && <Button onClick={onPrevious}>Previous</Button> }
-                { !last && <Button onClick={onNext}>Next</Button> }
-                { last && <Button positive onClick={onSubmit}>Submit</Button> }
+                { !isFirstPage && <Button onClick={onPrevious}>Previous</Button> }
+                { !isLastPage && <Button onClick={onNext}>Next</Button> }
+                { isLastPage && <Button positive onClick={onSubmit}>Submit</Button> }
             </div>
         )
     }
 }
 
 Buttons.propTypes = {
-    numberOfSteps: PropTypes.number.isRequired,
-    currentIndex: PropTypes.number.isRequired,
+    isFirstPage: PropTypes.bool.isRequired,
+    isLastPage: PropTypes.bool.isRequired,
     onPrevious: PropTypes.func.isRequired,
     onNext: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired
