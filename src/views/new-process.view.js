@@ -5,7 +5,10 @@ import {
     Header
 } from 'semantic-ui-react';
 
-import { FormRenderer } from '../components/form-renderer'
+import {
+    AppNavBar,
+    FormRenderer
+} from '../components'
 
 export class NewProcessView extends Component {
 
@@ -30,16 +33,16 @@ export class NewProcessView extends Component {
 
     render() {
         return (
-            <div>
+            <Container fluid>
+                <AppNavBar />
                 <Container>
-                    <Divider hidden />
                     <Header as="h1" align="center">
                         New Process
                     </Header>
                     <Divider hidden />
                     <FormRenderer steps={this.steps} />
                 </Container>
-            </div>
+            </Container>
         );
     }
 }
