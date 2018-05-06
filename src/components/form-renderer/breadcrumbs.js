@@ -3,7 +3,7 @@ import { Step } from 'semantic-ui-react';
 
 import { PropTypes } from 'prop-types'
 
-export class StepGroup extends Component {
+export class Breadcrumbs extends Component {
 
     handleStepClick = (index) => {
         this.props.onTitleSelected(index);
@@ -29,7 +29,7 @@ export class StepGroup extends Component {
     }
 }
 
-StepGroup.propTypes = {
+Breadcrumbs.propTypes = {
     titles: PropTypes.arrayOf(PropTypes.string).isRequired,
     selectedIndex: PropTypes.number,
     onTitleSelected: PropTypes.func.isRequired

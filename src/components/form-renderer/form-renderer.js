@@ -4,7 +4,7 @@ import { Form } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
 
 import './form-renderer.css';
-import { StepGroup } from './step-group';
+import { Breadcrumbs } from './breadcrumbs';
 import {
     previousStep,
     nextStep,
@@ -47,7 +47,7 @@ class FormRenderer extends Component {
     render() {
         return (
             <div>
-                <StepGroup
+                <Breadcrumbs
                     titles={this.props.steps.map(s => s.title)}
                     selectedIndex={this.props.selectedStepIndex}
                     onTitleSelected={this.props.selectStep} />
