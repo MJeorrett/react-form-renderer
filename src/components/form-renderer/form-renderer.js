@@ -74,7 +74,6 @@ export class FormRenderer extends Component {
                         />
                     );
                 })}
-                <Divider hidden />
                 <Buttons 
                     isFirstPage={isFirstPage}
                     isLastPage={isLastPage}
