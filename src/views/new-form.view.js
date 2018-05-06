@@ -18,6 +18,9 @@ export class NewFormView extends Component {
             fields: [
                 {
                     title: "Title"
+                },
+                {
+                    title: "Sub-title"
                 }
             ]
         },
@@ -26,6 +29,9 @@ export class NewFormView extends Component {
             fields: [
                 {
                     title: "Description"
+                },
+                {
+                    title: "Version"
                 }
             ]
         }

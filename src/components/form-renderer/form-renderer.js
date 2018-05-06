@@ -9,9 +9,29 @@ export class FormRenderer extends Component {
     constructor(props) {
         super(props);
 
+        const data = {};
+
+        props.steps.forEach(step => {
+            data[step.title] = {};
+
+            step.fields.forEach(field => {
+                data[step.title][field.title] = null
+            });
+        });
+
         this.state = {
-            activeStepIndex: 0
+            activeStepIndex: 0,
+            data
         };
+    }
+
+    onUpdate = (step, newValue) => {
+        const newData = Object.assign({}, this.state.data, {
+            [step.title]: newValue
+        });
+        this.setState({
+            data: newData
+        });
     }
 
     setActiveStepIndex = (index) => {
@@ -29,7 +49,7 @@ export class FormRenderer extends Component {
     }
 
     onSubmit = () => {
-        console.log("Form submitted!");
+        console.log("Form submitted:", this.state.data);
     }
 
     render() {
@@ -48,6 +68,7 @@ export class FormRenderer extends Component {
                         <Step key={index}
                             step={step}
                             isActive={activeStepIndex === index}
+                            onUpdate={newValue => this.onUpdate(step, newValue)}
                         />
                     );
                 })}
@@ -57,6 +78,10 @@ export class FormRenderer extends Component {
                     onPrevious={this.onPrevious}
                     onNext={this.onNext}
                     onSubmit={this.onSubmit}/>
+                
+                <pre>
+                    {JSON.stringify(this.state, null, 3)}
+                </pre>
             </div>
         );
     }

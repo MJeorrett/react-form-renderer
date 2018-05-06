@@ -6,6 +6,26 @@ import './step.css';
 import { Field } from './field';
 
 export class Step extends Component {
+
+    constructor(props) {
+        super(props);
+
+        const state = {};
+        props.step.fields.forEach(field => {
+            state[field.title] = null;
+        });
+        this.state = state;
+    }
+
+    handleChange = (field, newValue) => {
+        this.setState({
+            [field.title]: newValue
+        },
+        () => {
+            this.props.onUpdate(this.state)
+        });
+    }
+
     render = () => {
         const { isActive, step } = this.props;
 
@@ -13,7 +33,12 @@ export class Step extends Component {
             <div className={isActive ? "" : "displayNone"}>
                 <Form>
                     {step.fields.map((field, index) => {
-                        return <Field key={index} field={field} />
+                        return (
+                            <Field
+                                key={index}
+                                field={field}
+                                onUpdate={newValue => this.handleChange(field, newValue)} />
+                        )
                     })}
                 </Form>
             </div>
@@ -30,5 +55,6 @@ Step.propTypes = {
             })
         ).isRequired
     }).isRequired,
-    isActive: PropTypes.bool.isRequired
+    isActive: PropTypes.bool.isRequired,
+    onUpdate: PropTypes.func.isRequired
 };

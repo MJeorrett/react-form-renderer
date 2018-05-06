@@ -3,6 +3,10 @@ import { PropTypes } from 'prop-types';
 import { Form } from 'semantic-ui-react';
 
 export class Field extends Component {
+    handleChange = (event) => {
+        this.props.onUpdate(event.target.value);
+    }
+
     render() {
         const { field } = this.props;
 
@@ -10,7 +14,8 @@ export class Field extends Component {
             <Form.Input
                 fluid
                 label={field.title}
-                placeholder={field.title}>
+                placeholder={field.title}
+                onChange={this.handleChange}>
             </Form.Input>
         </Form.Group>
     }
@@ -19,5 +24,6 @@ export class Field extends Component {
 Field.propTypes = {
     field: PropTypes.shape({
         title: PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    onUpdate: PropTypes.func.isRequired
 };
