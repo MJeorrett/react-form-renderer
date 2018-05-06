@@ -4,6 +4,7 @@ import { Form } from 'semantic-ui-react';
 
 import './step.css';
 import { Field } from './field';
+import { step as stepPropType } from './propTypes';
 
 export class Step extends Component {
 
@@ -47,14 +48,7 @@ export class Step extends Component {
 }
 
 Step.propTypes = {
-    step: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        fields: PropTypes.arrayOf(
-            PropTypes.shape({
-                title: PropTypes.string.isRequired
-            })
-        ).isRequired
-    }).isRequired,
+    step: stepPropType,
     isActive: PropTypes.bool.isRequired,
     onUpdate: PropTypes.func.isRequired
 };

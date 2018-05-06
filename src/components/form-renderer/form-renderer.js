@@ -5,6 +5,7 @@ import { Divider } from 'semantic-ui-react';
 import { Breadcrumbs } from './breadcrumbs';
 import { Step } from './step';
 import { Buttons } from './buttons';
+import * as propTypes from './propTypes';
 
 export class FormRenderer extends Component {
     constructor(props) {
@@ -90,10 +91,5 @@ export class FormRenderer extends Component {
 }
 
 FormRenderer.propTypes = {
-    steps: PropTypes.arrayOf(PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        fields: PropTypes.arrayOf(PropTypes.shape({
-            title: PropTypes.string.isRequired
-        })).isRequired
-    })).isRequired
+    steps: PropTypes.arrayOf(propTypes.step)
 };

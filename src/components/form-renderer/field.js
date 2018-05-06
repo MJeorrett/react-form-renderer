@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Form } from 'semantic-ui-react';
 
+import { field as fieldPropType } from './propTypes';
+
 export class Field extends Component {
     handleChange = (event) => {
         this.props.onUpdate(event.target.value);
@@ -22,8 +24,6 @@ export class Field extends Component {
 }
 
 Field.propTypes = {
-    field: PropTypes.shape({
-        title: PropTypes.string.isRequired
-    }).isRequired,
+    field: fieldPropType,
     onUpdate: PropTypes.func.isRequired
 };
