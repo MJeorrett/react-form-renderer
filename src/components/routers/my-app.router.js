@@ -9,7 +9,7 @@ export class MyAppRouter extends Component {
             <BrowserRouter>
                 <Switch>
                     <Route exact path="/home" component={Views.HomeView} />
-                    <Route exact path="/new-process" component={Views.NewProcessView} />
+                    <Route exact path="/new-form" component={Views.NewFormView} />
                     <Redirect to="/home" /> 
                 </Switch>
             </BrowserRouter>

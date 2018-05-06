@@ -1,2 +1,2 @@
 export * from './home.view';
-export * from './new-process.view';
+export * from './new-form.view';

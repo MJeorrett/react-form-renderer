@@ -10,7 +10,7 @@ import {
     FormRenderer
 } from '../components'
 
-export class NewProcessView extends Component {
+export class NewFormView extends Component {
 
     steps = [
         {
@@ -37,7 +37,7 @@ export class NewProcessView extends Component {
                 <AppNavBar />
                 <Container>
                     <Header as="h1" align="center">
-                        New Process
+                        New Form
                     </Header>
                     <Divider hidden />
                     <FormRenderer steps={this.steps} />
