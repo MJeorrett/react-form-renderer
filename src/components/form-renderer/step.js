@@ -3,28 +3,18 @@ import { PropTypes } from 'prop-types';
 import { Form } from 'semantic-ui-react';
 
 import './step.css';
+import { Field } from './field';
 
 export class Step extends Component {
-
-    renderField(field, index) {
-        return (
-            <Form.Group key={index} widths='equal'>
-                <Form.Input
-                    fluid
-                    label={field.title}
-                    placeholder={field.title}>
-                </Form.Input>
-            </Form.Group>
-        );
-    }
-
     render = () => {
         const { isActive, step } = this.props;
 
         return (
             <div className={isActive ? "" : "displayNone"}>
                 <Form>
-                    {step.fields.map(this.renderField)}
+                    {step.fields.map((field, index) => {
+                        return <Field key={index} field={field} />
+                    })}
                 </Form>
             </div>
         );
