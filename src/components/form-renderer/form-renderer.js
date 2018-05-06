@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
 
 import './form-renderer.css';
@@ -11,22 +11,9 @@ import {
     selectStep,
     submit
 } from '../../store/form-render/form-renderer.actions';
+import { Buttons } from './buttons';
 
 class FormRenderer extends Component {
-
-    renderButtons = (index) => {
-        const first = index === 0;
-        const last = index === this.props.steps.length - 1;
-
-        return (
-            <div>
-                { !first && <Button onClick={this.props.previousStep}>Previous</Button> }
-                { !last && <Button onClick={this.props.nextStep}>Next</Button> }
-                { last && <Button positive onClick={this.props.submit}>Submit</Button> }
-            </div>
-        )
-    }
-
     renderStep = (step, index) => {
         const selected = index === this.props.selectedStepIndex;
 
@@ -35,7 +22,12 @@ class FormRenderer extends Component {
                 <Form>
                     {step.fields.map(this.renderStepField)}
                 </Form>
-                {this.renderButtons(index)}
+                <Buttons
+                    numberOfSteps={this.props.steps.length}
+                    currentIndex={this.props.selectedStepIndex}
+                    onPrevious={this.props.previousStep}
+                    onNext={this.props.nextStep}
+                    onSubmit={this.props.submit} />
             </div>
         );
     }
@@ -67,11 +59,11 @@ class FormRenderer extends Component {
 
 FormRenderer.propTypes = {
     steps: PropTypes.arrayOf(PropTypes.shape({
-        title: PropTypes.string,
+        title: PropTypes.string.isRequired,
         fields: PropTypes.arrayOf(PropTypes.shape({
-            title: PropTypes.string
-        }))
-    }))
+            title: PropTypes.string.isRequired
+        }).isRequired)
+    })).isRequired
 };
 
 const mapStateToProps = (state) => {
