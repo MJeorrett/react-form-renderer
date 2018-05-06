@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Header } from 'semantic-ui-react';
+import { Container, Header } from 'semantic-ui-react';
 
 export class HomeView extends Component {
     render() {
         return (
-            <Header as="h1">Welcome to Form Builder</Header>
+            <Container>
+                <Header as="h1">Welcome to Form Builder</Header>
+            </Container>
         );
     }
 }
